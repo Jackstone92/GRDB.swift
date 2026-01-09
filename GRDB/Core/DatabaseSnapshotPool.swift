@@ -1,16 +1,6 @@
 #if SQLITE_ENABLE_SNAPSHOT && !SQLITE_DISABLE_SNAPSHOT
 // Import C SQLite functions
-#if GRDBCIPHER // CocoaPods (SQLCipher subspec)
 import SQLCipher
-#elseif GRDBFRAMEWORK // GRDB.xcodeproj or CocoaPods (standard subspec)
-import SQLite3
-#elseif GRDBCUSTOMSQLITE // GRDBCustom Framework
-// #elseif SomeTrait
-// import ...
-#else // Default SPM trait must be the default. It impossible to detect from Xcode.
-import GRDBSQLite
-#endif
-
 /// A database connection that allows concurrent accesses to an unchanging
 /// database content, as it existed at the moment the snapshot was created.
 ///

@@ -18,8 +18,12 @@ var swiftSettings: [SwiftSetting] = [
     .define("SQLITE_HAS_CODEC"),
     .define("GRDBCIPHER")
 ]
-var cSettings: [CSetting] = []
-var dependencies: [PackageDescription.Package.Dependency] = []
+var cSettings: [CSetting] = [
+    .define("SQLITE_HAS_CODEC")
+]
+var dependencies: [PackageDescription.Package.Dependency] = [
+    .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", from: "4.11.0")
+]
 
 // Don't rely on those environment variables. They are ONLY testing conveniences:
 // $ SQLITE_ENABLE_PREUPDATE_HOOK=1 make test_SPM
@@ -40,7 +44,8 @@ if ProcessInfo.processInfo.environment["SPI_BUILDER"] == "1" {
 
 let package = Package(
     name: "GRDB",
-    defaultLocalization: "en", // for tests
+    defaultLocalization: "en",
+ // for tests
     platforms: [
         .iOS(.v13),
         .macOS(.v10_15),
@@ -61,11 +66,13 @@ let package = Package(
             name: "GRDB",
             dependencies: [
                 .target(name: "GRDBSQLite"),
+                .product(name: "SQLCipher", package: "SQLCipher.swift")
             ],
             path: "GRDB",
             resources: [.copy("PrivacyInfo.xcprivacy")],
             cSettings: cSettings,
-            swiftSettings: swiftSettings),
+            swiftSettings: swiftSettings
+),
         .testTarget(
             name: "GRDBTests",
             dependencies: ["GRDB"],

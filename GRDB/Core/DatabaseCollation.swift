@@ -1,15 +1,5 @@
 // Import C SQLite functions
-#if GRDBCIPHER // CocoaPods (SQLCipher subspec)
 import SQLCipher
-#elseif GRDBFRAMEWORK // GRDB.xcodeproj or CocoaPods (standard subspec)
-import SQLite3
-#elseif GRDBCUSTOMSQLITE // GRDBCustom Framework
-// #elseif SomeTrait
-// import ...
-#else // Default SPM trait must be the default. It impossible to detect from Xcode.
-import GRDBSQLite
-#endif
-
 import Foundation
 
 /// `DatabaseCollation` is a custom string comparison function used by SQLite.

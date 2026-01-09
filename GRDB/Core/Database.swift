@@ -1,15 +1,6 @@
 // Import C SQLite functions
-#if GRDBCIPHER // CocoaPods (SQLCipher subspec)
 import SQLCipher
-#elseif GRDBFRAMEWORK // GRDB.xcodeproj or CocoaPods (standard subspec)
-import SQLite3
-#elseif GRDBCUSTOMSQLITE // GRDBCustom Framework
-// #elseif SomeTrait
-// import ...
-#else // Default SPM trait must be the default. It impossible to detect from Xcode.
 import GRDBSQLite
-#endif
-
 import Foundation
 
 /// A raw SQLite connection, suitable for the SQLite C API.
@@ -180,14 +171,14 @@ public final class Database: CustomStringConvertible, CustomDebugStringConvertib
     nonisolated(unsafe) public static var logError: LogErrorFunction? {
         didSet {
             if logError != nil {
-                _registerErrorLogCallback { (_, code, message) in
-                    guard let logError = Database.logError else { return }
-                    guard let message = message.map(String.init) else { return }
-                    let resultCode = ResultCode(rawValue: code)
-                    logError(resultCode, message)
-                }
+//                _registerErrorLogCallback { (_, code, message) in
+//                    guard let logError = Database.logError else { return }
+//                    guard let message = message.map(String.init) else { return }
+//                    let resultCode = ResultCode(rawValue: code)
+//                    logError(resultCode, message)
+//                }
             } else {
-                _registerErrorLogCallback(nil)
+//                _registerErrorLogCallback(nil)
             }
         }
     }
